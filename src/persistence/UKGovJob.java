@@ -1,4 +1,4 @@
-package crawlers;
+package persistence;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,10 +10,10 @@ import javax.persistence.*;
  *
  */
 @Entity
-public class UKGovJobPersistence implements Serializable {
+public class UKGovJob implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public UKGovJobPersistence() {
+	public UKGovJob() {
 		super();
 	}
 	

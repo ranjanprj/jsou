@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Indeed {
+public class IndeedWorker {
 	public static void main(String[] args) throws IOException, InterruptedException{
 		
 		Document doc1 = Jsoup.connect("http://www.indeed.co.in/jobs?q=Data+Science&l=Pune,+Maharashtra").timeout(10*1000).get();
