@@ -4,6 +4,7 @@
 		<class>persistence.UserProfile</class>
 		<class>crawlers.UKGovJobPersistence</class>
 		<class>persistence.Comic</class>
+		<class>crawlers.Webopedia</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>
