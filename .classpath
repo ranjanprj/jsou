@@ -8,6 +8,8 @@
 			<attribute name="owner.project.facets" value="jpt.jpa"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Documents/Downloads/postgresql-9.4.1208.jre6.jar"/>
+	<classpathentry kind="lib" path="C:/Development/PGSQL/postgresql-9.4.1208.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mjain13/Downloads/eclipselink-2.6.3.v20160428-59c81c5/eclipselink/jlib/eclipselink.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mjain13/Downloads/eclipselink-2.6.3.v20160428-59c81c5/eclipselink/jlib/jpa/javax.persistence_2.1.1.v201509150925.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
