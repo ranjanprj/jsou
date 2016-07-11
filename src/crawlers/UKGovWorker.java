@@ -13,9 +13,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import persistence.DataLake;
+import persistence.UKGovJob;
 import utils.PersistenceFactory;
 
-public class UKGov {
+public class UKGovWorker {
 	private static int pageNumber = 0;
 	private static EntityManager em;
 	private static boolean jobIdIsNotFound = true;
@@ -40,6 +42,18 @@ public class UKGov {
 					pageNumber, escapedSkillsName);
 
 			Document doc = Jsoup.connect(url).timeout(10 * 1000).get();
+			
+			// Insert into data lake first and then process it.
+			
+			DataLake dl = new DataLake();
+			dl.setPayload(doc.toString().getBytes());
+			
+			em.getTransaction().begin();
+			em.persist(dl);
+			em.getTransaction().commit();
+
+			
+			
 			Elements tds = doc.select("table.JSresults  tr  td");
 			for (Element divElem : tds) {
 
@@ -49,9 +63,11 @@ public class UKGov {
 				Elements jobIdElem = div.select("div.mobileTd a");
 
 				long jobId = Long.parseLong(jobIdElem.get(0).attr("name"));
-				if (em.find(UKGovJobPersistence.class, jobId) == null) {
+				if (em.find(UKGovJob.class, jobId) == null) {
 					jobIdIsNotFound = true;
-					UKGovJobPersistence govJob = new UKGovJobPersistence();
+					
+				
+					UKGovJob govJob = new UKGovJob();
 					govJob.setJobId(jobId);
 					// posted on
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
@@ -77,7 +93,7 @@ public class UKGov {
 
 					Random rand = new Random();
 
-					Thread.sleep(rand.nextInt(10) + 3 * 1000);
+					Thread.sleep(rand.nextInt(10) + 6 * 1000);
 
 					Document doc1 = Jsoup.connect(aStr.get(1).attr("href")).timeout(10 * 1000).get();
 					Elements tds1 = doc1.select("div.jobDescription");
