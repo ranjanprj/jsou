@@ -1,4 +1,4 @@
-package profiler;
+package dto;
 
 public class SkillSetDescription {
 	public SkillSetDescription(){

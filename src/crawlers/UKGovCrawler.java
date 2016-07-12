@@ -2,8 +2,6 @@ package crawlers;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
@@ -13,21 +11,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import persistence.DataLake;
-import persistence.UKGovJob;
+import entity.DataLake;
+import entity.UKGovJob;
 import utils.PersistenceFactory;
 
-public class UKGovWorker {
+public class UKGovCrawler {
 	private static int pageNumber = 0;
 	private static EntityManager em;
 	private static boolean jobIdIsNotFound = true;
 
-	public static void main(String[] args) throws IOException, InterruptedException, ParseException {
 
-		getUKGOV("data science", 1);
-	}
-
-	public static void getUKGOV(final String skillsName, final int maxPage)
+	public static void crawl(final String skillsName, final int maxPage)
 			throws IOException, InterruptedException, ParseException {
 		em = PersistenceFactory.getEM();
 		int calMaxPage = maxPage < 0 ? 100 : maxPage;
@@ -77,7 +71,7 @@ public class UKGovWorker {
 				
 					Random rand = new Random();
 
-					Thread.sleep(rand.nextInt(10) + 6 * 1000);
+					Thread.sleep(rand.nextInt(5) + 3 * 1000);
 
 					Document doc1 = Jsoup.connect(aStr.get(1).attr("href")).timeout(10 * 1000).get();
 			
@@ -92,6 +86,8 @@ public class UKGovWorker {
 					em.getTransaction().begin();
 					em.persist(subLinkDL);
 					em.getTransaction().commit();
+
+					System.out.println("Page : " + pageNumber + " Job Id : " + jobId);
 	
 				} else {
 					// System.out.println("=========== JOB ID WAS FOUND

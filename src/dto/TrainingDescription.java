@@ -1,4 +1,4 @@
-package profiler;
+package dto;
 
 public class TrainingDescription {
 	public TrainingDescription(){

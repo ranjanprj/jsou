@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class GoogleWorker {
+public class GoogleCrawler {
 
   private static Pattern patternDomainName;
   private Matcher matcher;
@@ -22,7 +22,7 @@ public class GoogleWorker {
 	
   public static void main(String[] args) {
 
-	GoogleWorker obj = new GoogleWorker();
+	GoogleCrawler obj = new GoogleCrawler();
 	Set<String> result = obj.getDataFromGoogle("pune data science course");
 	for(String temp : result){
 		System.out.println(temp);

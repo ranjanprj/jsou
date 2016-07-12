@@ -5,9 +5,11 @@ import java.io.IOException;
 import javax.persistence.EntityManager;
 
 import org.jsoup.Connection.Response;
+
+import entity.Comic;
+
 import org.jsoup.Jsoup;
 
-import persistence.Comic;
 import utils.PersistenceFactory;
 
 public class Test {

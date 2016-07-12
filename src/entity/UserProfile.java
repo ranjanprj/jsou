@@ -1,10 +1,16 @@
-package persistence;
+package entity;
 
 import java.io.Serializable;
-import java.lang.String;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Entity implementation class for Entity: UserProfile
@@ -12,16 +18,19 @@ import javax.persistence.*;
  */
 @Entity
 public class UserProfile implements Serializable {
-
 	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	private String userName,currentSkill,futureSkill;
+	private String userName;
 	@Temporal(TemporalType.DATE)
 	private Date dob;
 	private String city,state,country;
+	private String currentPostion,futurePostion;
 	
+	@OneToMany
+	private List<Skill> currentSkill,futureSkill;
+		
 	private static final long serialVersionUID = 1L;
 
 	public UserProfile() {
@@ -41,16 +50,17 @@ public class UserProfile implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getCurrentSkill() {
+	
+	public List<Skill> getCurrentSkill() {
 		return currentSkill;
 	}
-	public void setCurrentSkill(String currentSkill) {
+	public void setCurrentSkill(List<Skill> currentSkill) {
 		this.currentSkill = currentSkill;
 	}
-	public String getFutureSkill() {
+	public List<Skill> getFutureSkill() {
 		return futureSkill;
 	}
-	public void setFutureSkill(String futureSkill) {
+	public void setFutureSkill(List<Skill> futureSkill) {
 		this.futureSkill = futureSkill;
 	}
 	public Date getDob() {
@@ -76,6 +86,18 @@ public class UserProfile implements Serializable {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public String getCurrentPostion() {
+		return currentPostion;
+	}
+	public void setCurrentPostion(String currentPostion) {
+		this.currentPostion = currentPostion;
+	}
+	public String getFuturePostion() {
+		return futurePostion;
+	}
+	public void setFuturePostion(String futurePostion) {
+		this.futurePostion = futurePostion;
 	}
    
 }

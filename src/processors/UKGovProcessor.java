@@ -15,8 +15,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import crawlertest.UKGov;
-import persistence.DataLake;
-import persistence.UKGovJob;
+import entity.DataLake;
+import entity.UKGovJob;
 import utils.PersistenceFactory;
 
 public class UKGovProcessor {
@@ -31,10 +31,10 @@ public class UKGovProcessor {
 						DataLake.class)
 				.setParameter("id", 0).getResultList();
 		
-		
-		List<UKGovJob> govJobs = new ArrayList<UKGovJob>();
+		System.out.println("Size of total 0- " + dl.size());
+		List<UKGovJob> govJobs = null;
 		for (DataLake d : dl) {		
-
+			 govJobs = new ArrayList<UKGovJob>();
 			Document doc = Jsoup.parse(d.getPayload());
 			Elements tds = doc.select("table.JSresults tr td");
 
@@ -75,12 +75,12 @@ public class UKGovProcessor {
 
 				govJobs.add(govJob);
 			}
-			System.out.println(govJobs.size());
+			System.out.println("GOV JOBS  SIZE " + govJobs.size());
 			// ======================================================================================
 			// Fetch all the sub documents
-			List<DataLake> dls = em.createQuery("SELECT t from DataLake t where t.childOfId = :id", DataLake.class)
+			List<DataLake> dls = em.createQuery("SELECT t from DataLake t where t.childOfId = :id and t.isProcessed = 'f'", DataLake.class)
 					.setParameter("id", d.getId()).getResultList();
-			System.out.println(dls.size());
+			System.out.println("SIZE OF CHILD" + dls.size());
 			for (int i=0; i<dls.size(); i++) {
 				UKGovJob govJob = govJobs.get(i);
 				DataLake dataLake = dls.get(i);
@@ -108,7 +108,8 @@ public class UKGovProcessor {
 					// take out all html tags
 					// System.out.println(tds1Elem.html());
 					govJob.setJobDescription(Jsoup.parse(tds1Elem.html()).text());
-					System.out.println(govJob.getJobDescription());
+					//System.out.println("---------------");
+					//System.out.println(govJob.getJobDescription());
 
 				}
 				// Elements jdElem = doc1.select("div.jobViewSummary dl
@@ -139,11 +140,20 @@ public class UKGovProcessor {
 				}
 
 				em.getTransaction().begin();
+				dataLake.setLastProcessedOn(new Date());
+				dataLake.setProcessed(true);
+				d.setLastProcessedOn(new Date());
+				d.setProcessed(true);
+				em.merge(dataLake);
+				em.merge(dataLake);
 				em.persist(govJob);
 				em.getTransaction().commit();
+				
 			}
 
 		}
+		
+
 
 	}
 }

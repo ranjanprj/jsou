@@ -1,4 +1,4 @@
-package persistence;
+package entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -19,6 +19,8 @@ public class DataLake implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	private long childOfId;
+	private boolean isProcessed;
+	
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -88,6 +90,12 @@ public class DataLake implements Serializable {
 	}
 	public void setJobSiteType(String jobSiteType) {
 		this.jobSiteType = jobSiteType;
+	}
+	public boolean isProcessed() {
+		return isProcessed;
+	}
+	public void setProcessed(boolean isProcessed) {
+		this.isProcessed = isProcessed;
 	}
    
 	

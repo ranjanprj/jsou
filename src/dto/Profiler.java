@@ -1,4 +1,4 @@
-package profiler;
+package dto;
 
 import java.util.List;
 
