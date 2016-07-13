@@ -138,6 +138,8 @@ public class UKGovProcessor {
 						govJob.setJobRefCode(jt.nextElementSibling().text());
 					}
 				}
+				
+				
 
 				em.getTransaction().begin();
 				dataLake.setLastProcessedOn(new Date());
@@ -146,7 +148,12 @@ public class UKGovProcessor {
 				d.setProcessed(true);
 				em.merge(dataLake);
 				em.merge(dataLake);
-				em.persist(govJob);
+				
+				long cntKey = em.createQuery("SELECT COUNT(t) FROM UKGovJob t WHERE t.jobId = :jobId",Long.class).setParameter("jobId", govJob.getJobId()).getSingleResult();
+				if (cntKey == 0) {
+			
+					em.persist(govJob);
+				}
 				em.getTransaction().commit();
 				
 			}

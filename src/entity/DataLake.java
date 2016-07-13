@@ -22,6 +22,7 @@ public class DataLake implements Serializable {
 	private boolean isProcessed;
 	
 	
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Lob
@@ -97,6 +98,6 @@ public class DataLake implements Serializable {
 	public void setProcessed(boolean isProcessed) {
 		this.isProcessed = isProcessed;
 	}
-   
 	
+   
 }

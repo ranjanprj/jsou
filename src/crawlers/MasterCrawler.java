@@ -8,6 +8,6 @@ public class MasterCrawler {
 		crawl();
 	}
 	public static void crawl() throws IOException, InterruptedException, ParseException{
-		UKGovCrawler.crawl("data science", 2);
+		UKGovCrawler.crawl("data science", 3);
 	}
 }
